@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalpli Site</title>
+    <style>
+        body {
+            background-color: #000;
+            color: white;
+            overflow: hidden;
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+        }
+        .falling-heart {
+            position: absolute;
+            top: 0;
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+            }
+        }
+        .container, .result-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.15);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(255, 0, 100, 0.5);
+            backdrop-filter: blur(15px);
+            width: 90%;
+            max-width: 400px;
+            box-sizing: border-box;
+        }
+        input, button {
+            padding: 12px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            outline: none;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        input {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-align: center;
+        }
+        button {
+            background: #ff4d6d;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover {
+            background: #ff1e4d;
+        }
+        .result-container {
+            display: none;
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+            padding: 30px;
+        }
+        #result {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 12px;
+            background: linear-gradient(45deg, #ff4d6d, #ff1e4d);
+            color: white;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0 15px rgba(255, 0, 100, 0.5);
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .instagram-link {
+            display: block;
+            margin-top: 15px;
+            font-size: 18px;
+            color: #ff4d6d;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .instagram-link:hover {
+            color: #ff1e4d;
+        }
+        .back-btn, .register-btn {
+            margin-top: 20px;
+            background: #fff;
+            color: #ff1e4d;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            border: none;
+            transition: 0.3s;
+        }
+        .back-btn:hover, .register-btn:hover {
+            background: #ff1e4d;
+            color: white;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="inputContainer">
+        <h2>İsmini Gir:</h2>
+        <input type="text" id="nameInput" placeholder="İsmini yaz...">
+        <button onclick="checkName()">Gönder</button>
+    </div>
+
+    <div class="result-container" id="resultContainer">
+        <p id="result"></p>
+        <a id="instagramLink" class="instagram-link" target="_blank"></a>
+        <button class="register-btn" id="registerBtn" onclick="window.location.href='kayit.html'" style="display: none;">İsminin görünmesini istiyorsan tıkla</button>
+        <button class="back-btn" onclick="goBack()">Geri</button>
+    </div>
+
+    <script>
+        function createFallingHeart() {
+            const hearts = ["❤️", "💖", "💘", "💝", "💞", "💌"];
+            const heart = document.createElement("div");
+            heart.classList.add("falling-heart");
+            heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
+            heart.style.left = Math.random() * window.innerWidth + "px";
+            heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
+            heart.style.fontSize = Math.random() * 20 + 15 + "px";
+            document.body.appendChild(heart);
+            setTimeout(() => { heart.remove(); }, 5000);
+        }
+        setInterval(createFallingHeart, 300);
+
+        function checkName() {
+            const name = document.getElementById("nameInput").value.trim().toLowerCase();
+            const result = document.getElementById("result");
+            const inputContainer = document.getElementById("inputContainer");
+            const resultContainer = document.getElementById("resultContainer");
+            const instagramLink = document.getElementById("instagramLink");
+            const registerBtn = document.getElementById("registerBtn");
+            
+            const nameMappings = {
+                "mertcan akdağ": { text: "🎉En iyi arkadaş🎉", insta: "mertcanakdag_07" },
+                "heval demir": { text: "Adamsin fav arkafaism😘😘💅🏻", insta: "msyoom" },
+                "Edanur Görgülü": { text: "sote ismarliyo", insta: "edanurgrgl07" },
+                "": { text: "?", insta: "" },
+            };
+            
+            if (nameMappings[name]) {
+                result.textContent = nameMappings[name].text;
+                instagramLink.href = `https://instagram.com/${nameMappings[name].insta}`;
+                instagramLink.textContent = `@${nameMappings[name].insta}`;
+                instagramLink.style.display = "block";
+                registerBtn.style.display = "none";
+            } else {
+                result.textContent = "Bilinmiyor";
+                instagramLink.style.display = "none";
+                registerBtn.style.display = "block";
+            }
+            
+            inputContainer.style.display = "none";
+            resultContainer.style.display = "block";
+        }
+
+        function goBack() {
+            document.getElementById("inputContainer").style.display = "block";
+            document.getElementById("resultContainer").style.display = "none";
+            document.getElementById("nameInput").value = "";
+        }
+    </script>
+</body>
+</html>
