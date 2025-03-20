@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ben neyim aw</title>
+    <title>Kalpli Site</title>
     <style>
         body {
             background-color: #000;
@@ -119,7 +119,7 @@
 </head>
 <body>
     <div class="container" id="inputContainer">
-        <h2>İsmini Gir: ismin ve soyismin baş harfleri büyük</h2>
+        <h2>İsmini Gir:</h2>
         <input type="text" id="nameInput" placeholder="İsmini yaz...">
         <button onclick="checkName()">Gönder</button>
     </div>
@@ -146,35 +146,36 @@
         setInterval(createFallingHeart, 300);
 
         function checkName() {
-            const name = document.getElementById("nameInput").value.trim().toLowerCase();
-            const result = document.getElementById("result");
-            const inputContainer = document.getElementById("inputContainer");
-            const resultContainer = document.getElementById("resultContainer");
-            const instagramLink = document.getElementById("instagramLink");
-            const registerBtn = document.getElementById("registerBtn");
-            
-            const nameMappings = {
-                "mertcan akdağ": { text: "🎉En iyi arkadaş🎉", insta: "mertcanakdag_07" },
-                "heval demir": { text: "Adamsin fav arkafaism😘😘💅🏻", insta: "msyoom" },
-                "Edanur Görgülü": { text: "sote ismarliyo", insta: "edanurgrgl07" },
-                "Batuhan Çağan Sağlam":{ text: "Mc gel", insta: "batuhan_saglam07" },
-            };
-            
-            if (nameMappings[name]) {
-                result.textContent = nameMappings[name].text;
-                instagramLink.href = `https://instagram.com/${nameMappings[name].insta}`;
-                instagramLink.textContent = `@${nameMappings[name].insta}`;
-                instagramLink.style.display = "block";
-                registerBtn.style.display = "none";
-            } else {
-                result.textContent = "Bilinmiyor";
-                instagramLink.style.display = "none";
-                registerBtn.style.display = "block";
-            }
-            
-            inputContainer.style.display = "none";
-            resultContainer.style.display = "block";
-        }
+    const name = document.getElementById("nameInput").value.trim().toLowerCase();
+    const result = document.getElementById("result");
+    const inputContainer = document.getElementById("inputContainer");
+    const resultContainer = document.getElementById("resultContainer");
+    const instagramLink = document.getElementById("instagramLink");
+    const registerBtn = document.getElementById("registerBtn");
+    
+    // Tüm isimleri küçük harfle kaydediyoruz
+    const nameMappings = {
+        "mertcan akdağ": { text: "🎉En iyi arkadaş🎉", insta: "mertcanakdag_07" },
+        "heval demir": { text: "Adamsin fav arkafaism😘😘💅🏻", insta: "msyoom" },
+        "edanur görgülü": { text: "sote ismarliyo", insta: "edanurgrgl07" },
+        "batuhan çağan sağlam": { text: "Mc gel", insta: "batuhan_saglam07" },
+    };
+    
+    if (nameMappings[name]) {
+        result.textContent = nameMappings[name].text;
+        instagramLink.href = `https://instagram.com/${nameMappings[name].insta}`;
+        instagramLink.textContent = `@${nameMappings[name].insta}`;
+        instagramLink.style.display = "block";
+        registerBtn.style.display = "none";
+    } else {
+        result.textContent = "Bilinmiyor";
+        instagramLink.style.display = "none";
+        registerBtn.style.display = "block";
+    }
+    
+    inputContainer.style.display = "none";
+    resultContainer.style.display = "block";
+}
 
         function goBack() {
             document.getElementById("inputContainer").style.display = "block";
